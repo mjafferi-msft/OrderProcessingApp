@@ -2,11 +2,14 @@
 
 namespace OrderProcessingApp.Processors
 {
+    /// <summary>
+    /// Processes total amount of each ingredient required for a set of orders.
+    /// </summary>
     public class IngredientProcessor : IIngredientProcessor
-    {
+    { 
         public Dictionary<string, double> CalculateTotalIngredients(
-            IEnumerable<Order> orders, 
-            Dictionary<string, Product> productMap, 
+            IEnumerable<Order> orders,
+            Dictionary<string, Product> productMap,
             Dictionary<string, List<Ingredient>> ingredientProductMap)
         {
             var totalIngredients = new Dictionary<string, double>();

@@ -12,7 +12,7 @@ namespace OrderProcessingApp
     {
         public static void Main()
         {
-            // Load data
+            // Load data from JSON files
             var orders = new JsonFileLoader<List<Order>>().Load(OrdersJsonPath) ?? [];
             var products = new JsonFileLoader<List<Product>>().Load(ProductsJsonPath) ?? [];
             var ingredientProductMap = new JsonFileLoader<Dictionary<string, List<Ingredient>>>().Load(IngredientsJsonPath) ?? [];
@@ -27,12 +27,12 @@ namespace OrderProcessingApp
             var productMap = products.ToDictionary(p => p.ProductId);
 
 
-            // Process
+            // Process orders and calculate totals
             var orderTotals = new OrderProcessor().CalculateOrderTotals(orders, productMap);
             var totalIngredients = new IngredientProcessor().CalculateTotalIngredients(orders, productMap, ingredientProductMap);
 
 
-            // Print
+            // Print results
             var output = new ConsoleOutput();
             if (orderTotals.Count == 0)
             {

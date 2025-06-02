@@ -2,10 +2,13 @@
 
 namespace OrderProcessingApp.Processors
 {
+    /// <summary>
+    /// Processes orders and calculates their totals based on product prices and quantities.
+    /// </summary>
     public class OrderProcessor : IOrderProcessor
     {
         public Dictionary<string, double> CalculateOrderTotals(
-            IEnumerable<Order> orders, 
+            IEnumerable<Order> orders,
             Dictionary<string, Product> productMap)
         {
             var orderTotals = new Dictionary<string, double>();

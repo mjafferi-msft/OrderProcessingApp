@@ -2,8 +2,14 @@ using OrderProcessingApp.Models;
 
 namespace OrderProcessingApp.Validators
 {
+    /// <summary>
+    /// Provides helper methods for validating orders and products.
+    /// </summary>
     public static class ValidatorHelper
     {
+        /// <summary>
+        /// Returns a list of valid orders after applying individual and group-level constraints.
+        /// </summary>
         public static List<Order> GetValidOrders(List<Order> orders)
         {
             // Filter out invalid orders based on individual constraints
@@ -57,6 +63,9 @@ namespace OrderProcessingApp.Validators
             return validOrders;
         }
 
+        /// <summary>
+        /// Returns a list of valid products after applying individual constraints and removing duplicates.
+        /// </summary>
         public static List<Product> GetValidProducts(List<Product> products)
         {
             // Filter out invalid products based on individual constraints

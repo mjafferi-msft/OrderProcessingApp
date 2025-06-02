@@ -1,5 +1,8 @@
 ﻿namespace OrderProcessingApp.Outputs
 {
+    /// <summary>
+    /// Provides methods to output order totals and ingredient requirements to the console.
+    /// </summary>
     public class ConsoleOutput : IOutput
     {
         public void OutputOrderTotals(Dictionary<string, double> orderTotals)
