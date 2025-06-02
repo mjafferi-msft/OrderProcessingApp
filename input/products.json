@@ -1,0 +1,27 @@
+[
+  {
+    "ProductId": "P001",
+    "Name": "Margerita Pizza",
+    "Price": 9.5
+  },
+  {
+    "ProductId": "P002",
+    "Name": "Italian Pizza",
+    "Price": 11.0
+  },
+  {
+    "ProductId": "P003",
+    "Name": "Hot Chicken Pizza",
+    "Price": 12.5
+  },
+  {
+    "ProductId": "P004",
+    "Name": "Burger",
+    "Price": 8.0
+  },
+  {
+    "ProductId": "P005",
+    "Name": "Salad",
+    "Price": 6.5
+  }
+]

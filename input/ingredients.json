@@ -1,0 +1,32 @@
+{
+  "P001": [
+    { "Name": "Cheese", "Amount": 200.0 },
+    { "Name": "Dough", "Amount": 300.0 },
+    { "Name": "Tomato Sauce", "Amount": 100.0 }
+  ],
+  "P002": [
+    { "Name": "Cheese", "Amount": 250.0 },
+    { "Name": "Dough", "Amount": 300.0 },
+    { "Name": "Tomato Sauce", "Amount": 120.0 },
+    { "Name": "Basil", "Amount": 20.0 }
+  ],
+  "P003": [
+    { "Name": "Cheese", "Amount": 200.0 },
+    { "Name": "Dough", "Amount": 300.0 },
+    { "Name": "Tomato Sauce", "Amount": 100.0 },
+    { "Name": "Chicken", "Amount": 150.0 },
+    { "Name": "Chili Flakes", "Amount": 10.0 }
+  ],
+  "P004": [
+    { "Name": "Bun", "Amount": 100.0 },
+    { "Name": "Patty", "Amount": 150.0 },
+    { "Name": "Lettuce", "Amount": 50.0 },
+    { "Name": "Cheese", "Amount": 50.0 }
+  ],
+  "P005": [
+    { "Name": "Lettuce", "Amount": 75.0 },
+    { "Name": "Tomato", "Amount": 100.0 },
+    { "Name": "Cucumber", "Amount": 100.0 },
+    { "Name": "Olive Oil", "Amount": 20.0 }
+  ]
+}
