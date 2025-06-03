@@ -1,0 +1,7 @@
+﻿namespace OrderProcessingApp.Validators
+{
+    public interface IValidator<T>
+    {
+        bool Validate(T obj);
+    }
+}

@@ -2,8 +2,8 @@
 {
     public interface IOutput
     {
-        void OutputOrderTotals(Dictionary<string, double> orderTotals);
-        void OutputTotalIngredients(Dictionary<string, double> totalIngredients);
+        void OutputOrderTotals(Dictionary<string, decimal> orderTotals);
+        void OutputTotalIngredients(Dictionary<string, decimal> totalIngredients);
         void OutputNoValidOrders();
 
     }

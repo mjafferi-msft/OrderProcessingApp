@@ -7,29 +7,27 @@ namespace OrderProcessingApp.Processors
     /// </summary>
     public class IngredientProcessor : IIngredientProcessor
     { 
-        public Dictionary<string, double> CalculateTotalIngredients(
+        public Dictionary<string, decimal> CalculateTotalIngredients(
             IEnumerable<Order> orders,
             Dictionary<string, Product> productMap,
             Dictionary<string, List<Ingredient>> ingredientProductMap)
         {
-            var totalIngredients = new Dictionary<string, double>();
+            var totalIngredients = new Dictionary<string, decimal>();
 
             foreach (var order in orders)
             {
-                if (!productMap.ContainsKey(order.ProductId))
+                if (productMap.ContainsKey(order.ProductId))
                 {
-                    continue;
-                }
-
-                if (ingredientProductMap.TryGetValue(order.ProductId, out var ingredients))
-                {
-                    foreach (var ingredient in ingredients)
+                    if (ingredientProductMap.TryGetValue(order.ProductId, out var ingredients))
                     {
-                        if (!totalIngredients.ContainsKey(ingredient.Name))
+                        foreach (var ingredient in ingredients)
                         {
-                            totalIngredients[ingredient.Name] = 0;
+                            if (!totalIngredients.ContainsKey(ingredient.Name))
+                            {
+                                totalIngredients[ingredient.Name] = 0;
+                            }
+                            totalIngredients[ingredient.Name] += ingredient.Amount * order.Quantity;
                         }
-                        totalIngredients[ingredient.Name] += ingredient.Amount * order.Quantity;
                     }
                 }
             }

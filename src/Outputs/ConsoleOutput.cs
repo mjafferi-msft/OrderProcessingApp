@@ -5,21 +5,30 @@
     /// </summary>
     public class ConsoleOutput : IOutput
     {
-        public void OutputOrderTotals(Dictionary<string, double> orderTotals)
+        public void OutputOrderTotals(Dictionary<string, decimal> orderTotals)
         {
-            Console.WriteLine("Order Totals: ");
+            Console.WriteLine("Order Totals");
+            Console.WriteLine("-------------");
+            Console.WriteLine("{0,-12} | {1,12}", "Order ID", "Total Amount");
+            Console.WriteLine("-------------|--------------");
+            decimal grandTotal = 0;
             foreach (var order in orderTotals)
             {
-                Console.WriteLine($"Order {order.Key}: €{order.Value:F2}");
+                Console.WriteLine("{0,-12} | {1,12:C}", order.Key, order.Value);
+                grandTotal += order.Value;
             }
+            Console.WriteLine("-------------|--------------");
+            Console.WriteLine("{0,-12} | {1,12:C}", "Total", grandTotal);
         }
 
-        public void OutputTotalIngredients(Dictionary<string, double> totalIngredients)
+        public void OutputTotalIngredients(Dictionary<string, decimal> totalIngredients)
         {
             Console.WriteLine("\nTotal Ingredients Required:");
+            Console.WriteLine("{0,-20} | {1,12}", "Ingredient", "Amount (grams)");
+            Console.WriteLine("---------------------|--------------");
             foreach (var ingredient in totalIngredients)
             {
-                Console.WriteLine($"{ingredient.Key}: {ingredient.Value:F2} grams.");
+                Console.WriteLine("{0,-20} | {1,12:N2}", ingredient.Key, ingredient.Value);
             }
         }
 

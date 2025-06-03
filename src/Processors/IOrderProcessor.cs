@@ -4,6 +4,6 @@ namespace OrderProcessingApp.Processors
 {
     public interface IOrderProcessor
     {
-        Dictionary<string, double> CalculateOrderTotals(IEnumerable<Order> orders, Dictionary<string, Product> productMap);
+        Dictionary<string, decimal> CalculateOrderTotals(IEnumerable<Order> orders, Dictionary<string, Product> productMap);
     }
 }
