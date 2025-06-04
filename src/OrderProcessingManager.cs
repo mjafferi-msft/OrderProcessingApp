@@ -83,8 +83,10 @@ namespace OrderProcessingApp
 
                 var validProductIds = new HashSet<string>(products.Select(p => p.ProductId));
 
-                // Filter orders to only those referencing valid products
-                orders = orders.Where(o => validProductIds.Contains(o.ProductId)).ToList();
+                // Filter orders to only those where all products are valid
+                orders = orders.GroupBy(o => o.OrderId)
+                    .Where(g => g.All(o => validProductIds.Contains(o.ProductId)))
+                    .SelectMany(g => g).ToList();
 
                 // Validate and filter orders
                 orders = orders.Where(_orderValidator.Validate).ToList();
