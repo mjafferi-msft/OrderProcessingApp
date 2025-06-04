@@ -10,7 +10,7 @@ namespace OrderProcessingApp.Processors
         public Dictionary<string, decimal> CalculateTotalIngredients(
             IEnumerable<Order> orders,
             Dictionary<string, Product> productMap,
-            Dictionary<string, List<Ingredient>> ingredientProductMap)
+            Dictionary<string, IList<Ingredient>> ingredientProductMap)
         {
             var totalIngredients = new Dictionary<string, decimal>();
 

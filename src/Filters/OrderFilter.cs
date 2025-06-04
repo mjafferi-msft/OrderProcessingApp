@@ -15,7 +15,7 @@ namespace OrderProcessingApp.Filters
             _logger = logger;
         }
 
-        public List<Order> Filter(List<Order> orders)
+        public IList<Order> Filter(IEnumerable<Order> orders)
         {
             var validOrders = new List<Order>();
 

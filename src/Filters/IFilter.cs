@@ -2,6 +2,6 @@
 {
     public interface IFilter<T>
     {
-        List<T> Filter(List<T> items);
+        IList<T> Filter(IEnumerable<T> items);
     }
 }

@@ -8,34 +8,32 @@ namespace OrderProcessingApp.Loaders
     /// </summary>
     public class JsonFileLoader<T> : ILoader<T>
     {
-        private readonly ILogger<JsonFileLoader<T>> _logger;
-
-        public JsonFileLoader(ILogger<JsonFileLoader<T>> logger)
-        {
-            _logger = logger;
-        }
-
-        public T? Load(string filePath)
+        public T Load(string filePath)
         {
             try
             {
                 if (!File.Exists(filePath))
                 {
-                    _logger.LogError("File not found: {FilePath}", filePath);
-                    return default;
+                    throw new FileNotFoundException($"File not found: {filePath}");
                 }
+
                 var json = File.ReadAllText(filePath);
+                if (string.IsNullOrWhiteSpace(json) || json.Trim() == "[]" || json.Trim() == "{}")
+                {
+                    throw new InvalidDataException($"File is empty: {filePath}");
+                }
+
                 var result = JsonConvert.DeserializeObject<T>(json);
                 if (result == null)
                 {
-                    _logger.LogError("Deserialization returned null for file: {FilePath}", filePath);
+                    throw new InvalidDataException($"Deserialization returned null for file: {filePath}");
                 }
+
                 return result;
             }
-            catch (Exception ex)
+            catch (JsonException)
             {
-                _logger.LogError(ex, "Failed to load or deserialize file: {FilePath}", filePath);
-                return default;
+                throw new InvalidDataException($"Invalid JSON format in file: {filePath}");
             }
         }
     }

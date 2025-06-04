@@ -2,6 +2,6 @@
 {
     public interface ILoader<T>
     {
-        T? Load(string filePath);
+        T Load(string filePath);
     }
 }

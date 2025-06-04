@@ -11,7 +11,7 @@
   },
   {
     "ProductId": "P003",
-    "ProductName": "Hot Chicken Pizza",
+    "ProductName": "Chicken Pizza",
     "Price": 12.5
   },
   {
@@ -23,5 +23,40 @@
     "ProductId": "P005",
     "ProductName": "Salad",
     "Price": 6.5
+  },
+  {
+    "ProductId": "P010",
+    "ProductName": "Invalid Price",
+    "Price": -5.0
+  },
+  {
+    "ProductId": "P011",
+    "ProductName": "Zero Price",
+    "Price": 0.0
+  },
+  {
+    "ProductId": "P012",
+    "ProductName": "Duplicate Product",
+    "Price": 10.0
+  },
+  {
+    "ProductId": "P012",
+    "ProductName": "Duplicate Product",
+    "Price": 12.0
+  },
+  {
+    "ProductId": "P013",
+    "ProductName": "Empty Ingredient Name",
+    "Price": 5.2
+  },
+  {
+    "ProductId": "P014",
+    "ProductName": "Duplicate Ingredients",
+    "Price": 3.7
+  },
+  {
+    "ProductId": "P015",
+    "ProductName": "No Ingredients",
+    "Price": 5
   }
 ]

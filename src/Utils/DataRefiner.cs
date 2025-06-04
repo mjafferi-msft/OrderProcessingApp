@@ -7,33 +7,33 @@ namespace OrderProcessingApp.Utils
     public static class DataRefiner
     {
         /// <summary>
-        /// Removes orders and products that reference invalid or duplicate ingredients.
+        /// Gets products that have valid ingredients based on the provided ingredient product map and ingredient validator.
         /// </summary>
-        public static void RemoveInvalidIngredientRefs(
-            List<Order> orders,
-            List<Product> products,
-            Dictionary<string, List<Ingredient>> ingredientProductMap,
+        public static IList<Product> GetProductsWithValidIngredients(
+            IList<Product> products,
+            Dictionary<string, IList<Ingredient>> ingredientProductMap,
             IValidator<Ingredient> ingredientValidator,
             ILogger logger)
         {
-            var validProductIds = new HashSet<string>(products.Select(p => p.ProductId));
+            var validProducts = new List<Product>();
 
-            foreach (var (productId, ingredients) in ingredientProductMap)
+            foreach (var product in products)
             {
-                if (ingredients == null || ingredients.Count == 0 || ingredients.Any(i => !ingredientValidator.Validate(i)))
+                if (ingredientProductMap.TryGetValue(product.ProductId, out var ingredients) &&
+                    ingredients != null &&
+                    ingredients.Count > 0 &&
+                    ingredients.All(ingredientValidator.Validate) &&
+                    ingredients.Select(i => i.Name).Distinct().Count() == ingredients.Count)
                 {
-                    logger?.LogWarning("Product '{ProductId}' dropped due to invalid or missing ingredients.", productId);
-                    validProductIds.Remove(productId);
+                    validProducts.Add(product);
                 }
-                else if (ingredients.Select(i => i.Name).Distinct().Count() != ingredients.Count)
+                else
                 {
-                    logger?.LogWarning("Product '{ProductId}' dropped due to duplicate ingredient names.", productId);
-                    validProductIds.Remove(productId);
+                    logger?.LogWarning("Product '{ProductId}' dropped due to invalid, missing, or duplicate ingredients.", product.ProductId);
                 }
             }
 
-            orders.RemoveAll(o => !validProductIds.Contains(o.ProductId));
-            products.RemoveAll(p => !validProductIds.Contains(p.ProductId));
+            return validProducts;
         }
     }
 }

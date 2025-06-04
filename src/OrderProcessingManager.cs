@@ -17,9 +17,9 @@ namespace OrderProcessingApp
     /// </summary>
     public class OrderProcessingManager
     {
-        private readonly ILoader<List<Order>> _orderLoader;
-        private readonly ILoader<List<Product>> _productLoader;
-        private readonly ILoader<Dictionary<string, List<Ingredient>>> _ingredientProductMapLoader;
+        private readonly ILoader<IList<Order>> _orderLoader;
+        private readonly ILoader<IList<Product>> _productLoader;
+        private readonly ILoader<Dictionary<string, IList<Ingredient>>> _ingredientProductMapLoader;
         private readonly IValidator<Order> _orderValidator;
         private readonly IValidator<Product> _productValidator;
         private readonly IValidator<Ingredient> _ingredientValidator;
@@ -31,9 +31,9 @@ namespace OrderProcessingApp
         private readonly ILogger<OrderProcessingManager> _logger;
 
         public OrderProcessingManager(
-            ILoader<List<Order>> orderLoader,
-            ILoader<List<Product>> productLoader,
-            ILoader<Dictionary<string, List<Ingredient>>> ingredientProductMapLoader,
+            ILoader<IList<Order>> orderLoader,
+            ILoader<IList<Product>> productLoader,
+            ILoader<Dictionary<string, IList<Ingredient>>> ingredientProductMapLoader,
             IValidator<Order> orderValidator,
             IValidator<Product> productValidator,
             IValidator<Ingredient> ingredientValidator,
@@ -60,43 +60,57 @@ namespace OrderProcessingApp
 
         public void Run()
         {
-            // Load JSON data from files
-            var orders = _orderLoader.Load(OrdersJsonPath) ?? [];
-            var products = _productLoader.Load(ProductsJsonPath) ?? [];
-            var ingredientProductMap = _ingredientProductMapLoader.Load(IngredientsJsonPath) ?? [];
-            Console.WriteLine($"Total orders loaded from JSON: {orders.Count}");
-            Console.WriteLine($"Total product loaded from JSON: {products.Count}");
-
-            // Validating orders and products
-            orders = orders.Where(_orderValidator.Validate).ToList();
-            products = products.Where(_productValidator.Validate).ToList();
-            Console.WriteLine($"Total product after validation: {products.Count}");
-
-            // Filtering orders and products
-            orders = _orderFilter.Filter(orders);
-            products = _productFilter.Filter(products);
-
-            // Remove orders and products based on ingredient validation
-            DataRefiner.RemoveInvalidIngredientRefs(orders, products, ingredientProductMap, _ingredientValidator, _logger);
-
-            var productMap = products.ToDictionary(p => p.ProductId);
-            Console.WriteLine($"Valid orders after validation and filtering: {orders.Count}");
-            Console.WriteLine($"Valid product after validation and filtering: {products.Count}");
-
-
-            // Process orders and calculate totals
-            var orderTotals = _orderProcessor.CalculateOrderTotals(orders, productMap);
-            var totalIngredients = _ingredientProcessor.CalculateTotalIngredients(orders, productMap, ingredientProductMap);
-
-            // Output results
-            if (orderTotals.Count == 0)
+            try
             {
-                _output.OutputNoValidOrders();
-            }
-            else
-            {
+                // Load JSON data from files
+                var orders = _orderLoader.Load(OrdersJsonPath);
+                var products = _productLoader.Load(ProductsJsonPath);
+                var ingredientProductMap = _ingredientProductMapLoader.Load(IngredientsJsonPath);
+
+                // Validate and filter products
+                products = products.Where(_productValidator.Validate).ToList();
+                products = _productFilter.Filter(products);
+
+                // Get only products with valid ingredients
+                products = DataRefiner.GetProductsWithValidIngredients(
+                    products, ingredientProductMap, _ingredientValidator, _logger).ToList();
+
+                if (products.Count == 0)
+                {
+                    _logger.LogWarning("No valid products remain after validation and filtering!");
+                    return;
+                }
+
+                var validProductIds = new HashSet<string>(products.Select(p => p.ProductId));
+
+                // Filter orders to only those referencing valid products
+                orders = orders.Where(o => validProductIds.Contains(o.ProductId)).ToList();
+
+                // Validate and filter orders
+                orders = orders.Where(_orderValidator.Validate).ToList();
+                orders = _orderFilter.Filter(orders);
+
+                if (orders.Count == 0)
+                {
+                    _logger.LogWarning("No valid orders remain after validation and filtering!");
+                    return;
+                }
+
+                var productMap = products.ToDictionary(p => p.ProductId);
+
+                // Process orders and calculate totals
+                var orderTotals = _orderProcessor.CalculateOrderTotals(orders, productMap);
+                var totalIngredients = _ingredientProcessor.CalculateTotalIngredients(orders, productMap, ingredientProductMap);
+
+                // Output results
+                _output.OutputCompleteOrderDetails(orders, productMap);
                 _output.OutputOrderTotals(orderTotals);
                 _output.OutputTotalIngredients(totalIngredients);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return;
             }
         }
     }

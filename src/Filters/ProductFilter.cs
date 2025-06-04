@@ -15,14 +15,14 @@ namespace OrderProcessingApp.Filters
             _logger = logger;
         }
 
-        public List<Product> Filter(List<Product> products)
+        public IList<Product> Filter(IEnumerable<Product> products)
         {
             var distinctProducts = products
                 .GroupBy(p => p.ProductId)
                 .Select(g => g.First())
                 .ToList();
 
-            if (distinctProducts.Count != products.Count)
+            if (distinctProducts.Count != products.Count())
             {
                 _logger.LogWarning("Duplicate products found and removed during filtering.");
             }

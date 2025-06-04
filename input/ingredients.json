@@ -1,6 +1,6 @@
 {
   "P001": [
-    { "Name": "Cheese", "Amount": 200.0 },
+    { "Name": "Cheese", "Amount": 400.0 },
     { "Name": "Dough", "Amount": 300.0 },
     { "Name": "Tomato Sauce", "Amount": 100.0 }
   ],
@@ -27,6 +27,18 @@
     { "Name": "Lettuce", "Amount": 75.0 },
     { "Name": "Tomato", "Amount": 100.0 },
     { "Name": "Cucumber", "Amount": 100.0 },
-    { "Name": "Olive Oil", "Amount": 20.0 }
+    { "Name": "Olives", "Amount": 20.0 }
+  ],
+  "P012": [
+    { "Name": "Onion","Amount": 50.0 },
+    { "Name": "Potato", "Amount": 50.0 }
+  ],
+  "P013": [
+    { "Name": "", "Amount": 100.0 },
+    { "Name": "Cheese", "Amount": 50.0 }
+  ],
+  "P014": [
+    { "Name": "Duplicate Ingredient", "Amount": 10.0 },
+    { "Name": "Duplicate Ingredient", "Amount": 10.0 }
   ]
 }
