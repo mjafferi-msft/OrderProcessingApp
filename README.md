@@ -62,3 +62,20 @@ When you run the application, it will:
    - The total price for each order.
    - The total amount of each ingredient required for all valid orders.
 - If no valid orders are found, it will display a message accordingly.
+
+
+## Running Tests
+
+You can run the unit tests in two ways:
+
+### 1. Using the .NET CLI
+
+From the project root, run:
+   ```bash
+   dotnet test
+   ```
+
+### 2. Using Visual Studio Test Explorer
+
+- Go to **Test > Test Explorer** from the top menu.
+- Click the **Run All** button to execute all tests, or right-click individual tests to run/debug them.
