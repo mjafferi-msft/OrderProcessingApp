@@ -5,7 +5,7 @@ namespace OrderProcessingApp.Tests.Loaders
 {
     public class DummyModel
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
     }
 
     [TestFixture]
