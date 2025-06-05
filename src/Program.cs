@@ -2,7 +2,6 @@
 
 namespace OrderProcessingApp
 {
-
     /// <summary>
     /// Entry point for the OrderProcessingApp application. It configures services and starts the order processing.
     /// </summary>

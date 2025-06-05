@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+
+using static OrderProcessingApp.Constants.AppConstants;
 
 namespace OrderProcessingApp.Loaders
 {
@@ -12,6 +13,7 @@ namespace OrderProcessingApp.Loaders
         {
             try
             {
+                filePath = Path.Combine(AppContext.BaseDirectory, InputDirectory, filePath);
                 if (!File.Exists(filePath))
                 {
                     throw new FileNotFoundException($"File not found: {filePath}");

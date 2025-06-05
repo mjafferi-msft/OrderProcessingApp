@@ -16,20 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="input\" />
-    <Folder Include="src\Models\" />
-    <Folder Include="test\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="input\ingredients.json">
+    <None Include="..\input\*.json">
+      <Link>input\%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="input\orders.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="input\products.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="..\README.md">
+      <Link>README.md</Link>
     </None>
   </ItemGroup>
 

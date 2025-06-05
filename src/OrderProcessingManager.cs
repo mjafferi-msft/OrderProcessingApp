@@ -63,9 +63,9 @@ namespace OrderProcessingApp
             try
             {
                 // Load JSON data from files
-                var orders = _orderLoader.Load(OrdersJsonPath);
-                var products = _productLoader.Load(ProductsJsonPath);
-                var ingredientProductMap = _ingredientProductMapLoader.Load(IngredientsJsonPath);
+                var orders = _orderLoader.Load(OrderJsonPath);
+                var products = _productLoader.Load(ProductJsonPath);
+                var ingredientProductMap = _ingredientProductMapLoader.Load(IngredientJsonPath);
 
                 // Validate and filter products
                 products = products.Where(_productValidator.Validate).ToList();

@@ -30,11 +30,25 @@ All input files are located in the `input` folder at the project root:
    ```bash
    dotnet build
    ```
-4. **Run the application** from the project root: 
+
+### Run the Application (Console)
+
+You can run the application from the console in two ways:
+
+#### **1. From the project root (recommended):**
    ```bash
+   dotnet run --project src/OrderProcessingApp.csproj
+   ```
+
+#### **2. From the `src` directory:**
+   ```bash
+   cd src
    dotnet run
    ```
-5. **Alternatively, you can run the application using the _Run_ button** from the top menu in Visual Studio or your preferred IDE.
+
+### Run from Visual Studio
+
+- You can also run the application using **the _Run_ button** from the top menu in Visual Studio or your preferred IDE.  
 
 
 ## Console Output
@@ -44,6 +58,7 @@ When you run the application, it will:
 - Load orders, products, and ingredients from the `input` folder.
 - Validate and Process each order.
 - For valid orders, print:
+   - Valid order details.
    - The total price for each order.
    - The total amount of each ingredient required for all valid orders.
 - If no valid orders are found, it will display a message accordingly.
